@@ -1,4 +1,13 @@
-import { Column, DataType, Model, Table } from 'sequelize-typescript';
+import { ApiProperty } from '@nestjs/swagger';
+import {
+  BelongsToMany,
+  Column,
+  DataType,
+  Model,
+  Table,
+} from 'sequelize-typescript';
+import { RoleModel } from 'src/roles/roles.model';
+import { UserRolesModel } from 'src/roles/user-roles.model';
 
 interface UserCreationAttributes {
   email: string;
@@ -7,6 +16,7 @@ interface UserCreationAttributes {
 
 @Table({ tableName: 'users' })
 export class UserModel extends Model<UserModel, UserCreationAttributes> {
+  @ApiProperty({ example: '1', description: 'Unique id' })
   @Column({
     type: DataType.INTEGER,
     unique: true,
@@ -15,6 +25,7 @@ export class UserModel extends Model<UserModel, UserCreationAttributes> {
   })
   id: number;
 
+  @ApiProperty({ example: 'test@test.com', description: 'User email' })
   @Column({
     type: DataType.STRING,
     unique: true,
@@ -22,9 +33,13 @@ export class UserModel extends Model<UserModel, UserCreationAttributes> {
   })
   email: string;
 
+  @ApiProperty({ example: 'password', description: 'User password' })
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
   password: string;
+
+  @BelongsToMany(() => RoleModel, () => UserRolesModel)
+  roles: RoleModel[];
 }
