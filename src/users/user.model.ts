@@ -3,11 +3,13 @@ import {
   BelongsToMany,
   Column,
   DataType,
+  HasMany,
   Model,
   Table,
 } from 'sequelize-typescript';
 import { RoleModel } from 'src/roles/roles.model';
 import { UserRolesModel } from 'src/roles/user-roles.model';
+import { TodoModel } from 'src/todos/todos.model';
 
 interface UserCreationAttributes {
   email: string;
@@ -42,4 +44,7 @@ export class UserModel extends Model<UserModel, UserCreationAttributes> {
 
   @BelongsToMany(() => RoleModel, () => UserRolesModel)
   roles: RoleModel[];
+
+  @HasMany(() => TodoModel)
+  todos: TodoModel[];
 }

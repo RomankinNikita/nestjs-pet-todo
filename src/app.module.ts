@@ -7,6 +7,9 @@ import { RolesModule } from './roles/roles.module';
 import { RoleModel } from './roles/roles.model';
 import { UserRolesModel } from './roles/user-roles.model';
 import { AuthModule } from './auth/auth.module';
+import { TodosModule } from './todos/todos.module';
+import { TodoModel } from './todos/todos.model';
+import { FilesModule } from './files/files.module';
 
 @Module({
   controllers: [],
@@ -22,12 +25,14 @@ import { AuthModule } from './auth/auth.module';
       username: process.env.USER_NAME,
       password: process.env.USER_PASSWORD,
       database: process.env.DB_NAME,
-      models: [UserModel, RoleModel, UserRolesModel],
+      models: [UserModel, RoleModel, UserRolesModel, TodoModel],
       autoLoadModels: true,
     }),
     UsersModule,
     RolesModule,
     AuthModule,
+    TodosModule,
+    FilesModule,
   ],
 })
 export class AppModule {}
