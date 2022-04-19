@@ -10,6 +10,8 @@ import { AuthModule } from './auth/auth.module';
 import { TodosModule } from './todos/todos.module';
 import { TodoModel } from './todos/todos.model';
 import { FilesModule } from './files/files.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import * as path from 'path';
 
 @Module({
   controllers: [],
@@ -17,6 +19,9 @@ import { FilesModule } from './files/files.module';
   imports: [
     ConfigModule.forRoot({
       envFilePath: `.${process.env.NODE_ENV}.env`,
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: path.resolve(__dirname, 'static'),
     }),
     SequelizeModule.forRoot({
       dialect: 'postgres',
