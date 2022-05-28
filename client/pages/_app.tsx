@@ -1,6 +1,7 @@
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { MantineProvider } from '@mantine/core';
+import { UserContextProvider } from '../contexts/user';
 
 export default function App(props: AppProps) {
   const { Component, pageProps } = props;
@@ -22,7 +23,9 @@ export default function App(props: AppProps) {
           colorScheme: 'light',
         }}
       >
-        <Component {...pageProps} />
+        <UserContextProvider>
+          <Component {...pageProps} />
+        </UserContextProvider>
       </MantineProvider>
     </>
   );

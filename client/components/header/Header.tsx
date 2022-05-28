@@ -4,9 +4,12 @@ import {
   Header as HeaderBase,
   MediaQuery,
   useMantineTheme,
-  Text,
   Group,
+  Avatar,
+  Box,
+  Button,
 } from '@mantine/core';
+import { User } from '../user/User';
 
 type HeaderProps = {
   opened: boolean;
@@ -18,18 +21,23 @@ export const Header: FC<HeaderProps> = ({ opened, onBurgerClick }) => {
 
   return (
     <HeaderBase height={70} p="md">
-      <Group align={'center'} sx={{ height: '100%' }}>
-        <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
-          <Burger
-            opened={opened}
-            onClick={onBurgerClick}
-            size="sm"
-            color={theme.colors.gray[6]}
-            mr="xl"
-          />
-        </MediaQuery>
+      <Group align="center" position="apart" sx={{ height: '100%' }}>
+        <Group spacing="xs">
+          <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
+            <Burger
+              opened={opened}
+              onClick={onBurgerClick}
+              size="sm"
+              color={theme.colors.gray[6]}
+            />
+          </MediaQuery>
 
-        <Text>Application header</Text>
+          <Avatar color="cyan" radius="xl">
+            Pet
+          </Avatar>
+        </Group>
+
+        <User />
       </Group>
     </HeaderBase>
   );

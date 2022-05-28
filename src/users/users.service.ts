@@ -1,5 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
+import { RoleModel } from 'src/roles/roles.model';
 import { RolesService } from 'src/roles/roles.service';
 import { AddRoleDto } from './dto/add-role.dto';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -9,6 +10,7 @@ import { UserModel } from './user.model';
 export class UsersService {
   constructor(
     @InjectModel(UserModel) private userRepository: typeof UserModel,
+    @InjectModel(RoleModel) private roleRepository: typeof RoleModel,
     private rolesService: RolesService,
   ) {}
 
@@ -30,7 +32,10 @@ export class UsersService {
   async getUserByEmail(email: string) {
     const user = await this.userRepository.findOne({
       where: { email },
-      include: { all: true },
+      include: {
+        model: RoleModel,
+        attributes: ['value'],
+      },
     });
     return user;
   }

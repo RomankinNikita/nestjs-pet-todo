@@ -42,12 +42,16 @@ export class AuthService {
     const { email, id, roles } = user;
     const payload = { email, id, roles };
     return {
-      token: this.jwtService.sign(payload),
+      token: this.jwtService.sign(payload, { expiresIn: '2 days' }),
+      user: payload,
     };
   }
 
   private async validateUser(dto: CreateUserDto) {
     const user = await this.userService.getUserByEmail(dto.email);
+    if (!user) {
+      throw new UnauthorizedException('Incorrect email or password');
+    }
     const isPasswordMatched = await bcrypt.compare(dto.password, user.password);
     if (user && isPasswordMatched) {
       return user;
