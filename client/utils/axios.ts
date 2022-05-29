@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { baseNestServerURL, baseNextServerURL } from './constans';
+import { baseNestServerURL, baseNextServerURL } from './constants';
 
 const NestApi = axios.create({
   baseURL: baseNestServerURL,

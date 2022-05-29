@@ -10,6 +10,8 @@ import {
   Button,
 } from '@mantine/core';
 import { User } from '../user/User';
+import Link from 'next/link';
+import { APP_PATHS } from '../../utils/constants';
 
 type HeaderProps = {
   opened: boolean;
@@ -32,9 +34,13 @@ export const Header: FC<HeaderProps> = ({ opened, onBurgerClick }) => {
             />
           </MediaQuery>
 
-          <Avatar color="cyan" radius="xl">
-            Pet
-          </Avatar>
+          <Link href={APP_PATHS.main}>
+            <a>
+              <Avatar color="cyan" radius="xl">
+                Pet
+              </Avatar>
+            </a>
+          </Link>
         </Group>
 
         <User />

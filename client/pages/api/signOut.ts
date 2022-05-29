@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { COOKIE_NAME } from '../../utils/constans';
+import { COOKIE_NAME } from '../../utils/constants';
 import { serialize } from 'cookie';
 
 export default async function handler(req: Request, res: Response) {

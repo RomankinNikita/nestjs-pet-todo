@@ -2,7 +2,7 @@ import { Box, Button, Avatar, Group, Text, Menu } from '@mantine/core';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { useUserContext } from '../../contexts/user';
-import { APP_PATHS, NEXT_API_PATHS } from '../../utils/constans';
+import { APP_PATHS, NEXT_API_PATHS } from '../../utils/constants';
 import { Logout } from 'tabler-icons-react';
 import { NextApi } from '../../utils/axios';
 import { handleClientError } from '../../utils/handleError';

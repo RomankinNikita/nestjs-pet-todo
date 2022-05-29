@@ -17,6 +17,10 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
+  async check(user: UserModel) {
+    return this.generateToken(user);
+  }
+
   async login(dto: CreateUserDto) {
     const user = await this.validateUser(dto);
     return this.generateToken(user);

@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { UserMapped } from '../../utils/types';
 import { handleClientError } from '../../utils/handleError';
 import { useUserContext } from '../../contexts/user';
-import { APP_PATHS, NEXT_API_PATHS } from '../../utils/constans';
+import { APP_PATHS, NEXT_API_PATHS } from '../../utils/constants';
 
 const SingIn: NextPage = () => {
   const [loading, setLoading] = useState(false);

@@ -1,11 +1,15 @@
 import { FC } from 'react';
-import { Navbar as NavbarBase } from '@mantine/core';
+import { Navbar as NavbarBase, List, ThemeIcon } from '@mantine/core';
+import { useRoutes } from '../../hooks/useRoutes';
+import Link from 'next/link';
 
 type NavbarProps = {
   hidden: boolean;
 };
 
 export const Navbar: FC<NavbarProps> = ({ hidden }) => {
+  const routes = useRoutes();
+
   return (
     <NavbarBase
       width={{ base: 250 }}
@@ -13,7 +17,26 @@ export const Navbar: FC<NavbarProps> = ({ hidden }) => {
       hiddenBreakpoint="sm"
       hidden={hidden}
     >
-      <NavbarBase.Section>Navbar</NavbarBase.Section>
+      <NavbarBase.Section>
+        <List spacing="md" size="md">
+          {routes.map(({ id, href, label, icon: Icon }) => (
+            <List.Item
+              key={id}
+              icon={
+                Icon && (
+                  <ThemeIcon size={24} radius="xl">
+                    <Icon />
+                  </ThemeIcon>
+                )
+              }
+            >
+              <Link href={href}>
+                <a>{label}</a>
+              </Link>
+            </List.Item>
+          ))}
+        </List>
+      </NavbarBase.Section>
     </NavbarBase>
   );
 };
