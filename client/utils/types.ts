@@ -3,7 +3,7 @@ export enum Roles {
   USER = 'USER',
 }
 
-type Role = {
+export type Role = {
   value: string;
 };
 

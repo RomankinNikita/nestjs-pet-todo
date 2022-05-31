@@ -1,9 +1,8 @@
-import { intersection } from 'lodash';
 import { useMemo } from 'react';
 import { useUserContext } from '../contexts/user';
-import { APP_PATHS } from '../utils/constants';
-import { Roles } from '../utils/types';
+import { APP_PATHS, REQUIRED_ROLES_BY_PATH } from '../utils/constants';
 import { Icon, List, Dashboard, Man } from 'tabler-icons-react';
+import { isRouteAvailable } from '../utils/isRouteAvailable';
 
 type Route = {
   id: number;
@@ -24,14 +23,14 @@ export const useRoutes = (): Route[] => {
         id: 1,
         href: APP_PATHS.admin,
         label: 'Admin',
-        isAvailable: isRouteAvailable(userRoles, [Roles.ADMIN]),
+        isAvailable: isRouteAvailable(userRoles, REQUIRED_ROLES_BY_PATH[APP_PATHS.admin]),
         icon: Man,
       },
       {
         id: 2,
         href: APP_PATHS.todos,
         label: 'Todo List',
-        isAvailable: isRouteAvailable(userRoles, [Roles.USER]),
+        isAvailable: isRouteAvailable(userRoles, REQUIRED_ROLES_BY_PATH[APP_PATHS.todos]),
         icon: List,
       },
       {
@@ -45,8 +44,3 @@ export const useRoutes = (): Route[] => {
   }, [user?.roles]);
   return routes;
 };
-
-function isRouteAvailable(userRoles: Roles[], requiredRoles: Roles[]): boolean {
-  const intersections = intersection(userRoles, requiredRoles);
-  return !!intersections.length;
-}

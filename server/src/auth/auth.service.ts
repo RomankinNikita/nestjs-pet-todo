@@ -17,6 +17,10 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
+  async verify(user: UserModel) {
+    return user?.roles;
+  }
+
   async check(user: UserModel) {
     return this.generateToken(user);
   }

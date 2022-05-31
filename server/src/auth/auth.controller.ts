@@ -10,6 +10,12 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @UseGuards(JwtAuthGuard)
+  @Get('/verify')
+  verify(@Req() req) {
+    return this.authService.verify(req.user);
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Get('/check')
   check(@Req() req) {
     return this.authService.check(req.user);
