@@ -3,10 +3,7 @@ import Head from 'next/head';
 import { MantineProvider } from '@mantine/core';
 import { UserContextProvider, useUserContext } from '../contexts/user';
 import '../styles/globals.scss';
-import { useEffect } from 'react';
-import { NEXT_API_PATHS } from '../utils/constants';
-import { NextApi } from '../utils/axios';
-import { UserMapped } from '../utils/types';
+import { NotificationsProvider } from '@mantine/notifications';
 import { AuthChecker } from '../components/auth-checker/AuthChecker';
 
 export default function App(props: AppProps) {
@@ -29,10 +26,12 @@ export default function App(props: AppProps) {
           colorScheme: 'light',
         }}
       >
-        <UserContextProvider>
-          <AuthChecker />
-          <Component {...pageProps} />
-        </UserContextProvider>
+        <NotificationsProvider>
+          <UserContextProvider>
+            <AuthChecker />
+            <Component {...pageProps} />
+          </UserContextProvider>
+        </NotificationsProvider>
       </MantineProvider>
     </>
   );

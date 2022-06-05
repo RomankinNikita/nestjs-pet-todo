@@ -10,8 +10,16 @@ import {
   Group,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
+import { useState } from 'react';
+import { NextApi } from '../../utils/axios';
+import { APP_PATHS, NEXT_API_PATHS } from '../../utils/constants';
+import { useRouter } from 'next/router';
+import { handleClientError } from '../../utils/handleError';
+import { showNotification } from '@mantine/notifications';
 
 const SignUp: NextPage = () => {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const form = useForm({
     initialValues: {
       email: '',
@@ -28,18 +36,46 @@ const SignUp: NextPage = () => {
     },
   });
 
+  const handleSubmit = async (values: typeof form.values): Promise<void> => {
+    const requestBody = {
+      email: values.email,
+      password: values.password,
+    };
+    try {
+      setLoading(true);
+      const response = await NextApi.post(
+        NEXT_API_PATHS.signUp,
+        requestBody,
+      );
+      if (response.status === 200) {
+        router.push(APP_PATHS.main);
+        showNotification({
+          title: 'Congratulations!',
+          message: 'New user has been created successfully',
+          color: 'green',
+          autoClose: false,
+        });
+      } else {
+        throw new Error('Something went wrong... Try again')
+      }
+    } catch (e: unknown) {
+      handleClientError(e, 'SignUp Error');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <Box
-      sx={{ maxWidth: 300, transform: 'translateY(-100%)' }}
-      mx="auto"
-      mt="50%"
+    sx={{ maxWidth: 300 }} mx="auto" mt="20%"
     >
-      <form onSubmit={form.onSubmit((values) => console.log(values))}>
+      <form onSubmit={form.onSubmit(handleSubmit)}>
         <TextInput
           required
           label="Email"
           placeholder="your@email.com"
           {...form.getInputProps('email')}
+          disabled={loading}
         />
 
         <PasswordInput
@@ -47,6 +83,7 @@ const SignUp: NextPage = () => {
           label="Password"
           required
           {...form.getInputProps('password')}
+          disabled={loading}
         />
 
         <PasswordInput
@@ -55,6 +92,7 @@ const SignUp: NextPage = () => {
           required
           label="Repeat Password"
           {...form.getInputProps('repeatPassword')}
+          disabled={loading}
         />
 
         <Group>
@@ -64,7 +102,7 @@ const SignUp: NextPage = () => {
           </NextLink>
         </Group>
 
-        <Button type="submit" fullWidth mt="md">
+        <Button type="submit" fullWidth mt="md" disabled={loading}>
           Sign Up
         </Button>
       </form>
